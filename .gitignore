@@ -1,0 +1,4 @@
+node_modules/*
+*.sha1
+test.js
+servers.json
