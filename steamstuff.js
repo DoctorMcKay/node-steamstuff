@@ -40,8 +40,8 @@ function SteamStuff(Steam, client) {
 				lastLogOnDetails.authCode = code;
 				client.logOn(lastLogOnDetails);
 			});
-		} else {
-			client.emit('steamstuff-error', e);
+		} else if(client.listeners('error') == 1) {
+			throw e; // Emulate standard EventEmitter behavior
 		}
 	});
 	
