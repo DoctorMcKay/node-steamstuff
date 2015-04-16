@@ -5,5 +5,13 @@
 	"main": "steamstuff.js",
 	"dependencies": {
 		"appdirectory": "0.1.x"
-	}
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/DoctorMcKay/node-steamstuff"
+	},
+	"bugs": {
+		"url": "https://github.com/DoctorMcKay/node-steamstuff/issues"
+	},
+	"homepage": "https://github.com/DoctorMcKay/node-steamstuff"
 }
