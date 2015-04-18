@@ -7,8 +7,13 @@ var dirs = new AppDirectory({
 
 // Make sure all levels of userData exist
 var checkPath = '';
-dirs.userData().replace(/\\/g, '/').split('/').forEach(function(dir) {
-	checkPath += (checkPath ? '/' : '') + dir;
+dirs.userData().replace(/\\/g, '/').split('/').forEach(function(dir, index) {
+	if(index === 0 && !dir) {
+		checkPath = '/';
+	} else {
+		checkPath += (checkPath ? '/' : '') + dir;
+	}
+	
 	if(!fs.existsSync(checkPath)) {
 		fs.mkdirSync(checkPath, 0750);
 	}
