@@ -26,18 +26,17 @@ function SteamStuff(Steam, client) {
 	var lastLogOnDetails;
 	
 	try {
-		var servers = fs.readFileSync(dirs.userData() + '/servers.json');
-		Steam.servers = JSON.parse(servers);
+		Steam.servers = JSON.parse(fs.readFileSync(dirs.userData() + '/servers.json'));
 	} catch(e) {
 		// We don't care if it doesn't exist
 	}
 	
 	client.logOn = function(details) {
 		if(details.accountName && !details.shaSentryfile) {
-			try {
+			if(fs.existsSync(dirs.userData() + '/sentry.' + details.accountName + '.bin')) {
+				details.shaSentryfile = fs.readFileSync(dirs.userData() + '/sentry.' + details.accountName + '.bin');
+			} else if(fs.existsSync(dirs.userData() + '/sentry.' + details.accountName + '.sha1')) {
 				details.shaSentryfile = fs.readFileSync(dirs.userData() + '/sentry.' + details.accountName + '.sha1');
-			} catch(e) {
-				// We don't care if it doesn't exist
 			}
 		}
 		
@@ -62,8 +61,8 @@ function SteamStuff(Steam, client) {
 		}
 	});
 	
-	client.on('sentry', function(hash) {
-		fs.writeFileSync(dirs.userData() + '/sentry.' + lastLogOnDetails.accountName + '.sha1', hash);
+	client.on('sentry', function(sentry) {
+		fs.writeFileSync(dirs.userData() + '/sentry.' + lastLogOnDetails.accountName + (sentry.length == 20 ? '.sha1' : '.bin'), sentry);
 	});
 	
 	client.on('servers', function(servers) {
