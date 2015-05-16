@@ -46,14 +46,19 @@ function SteamStuff(Steam, client) {
 	};
 	
 	client.on('error', function(e) {
-		if(e.eresult == Steam.EResult.AccountLogonDenied) {
+		if(e.eresult == Steam.EResult.AccountLogonDenied || e.eresult == Steam.EResult.AccountLoginDeniedNeedTwoFactor) {
 			var rl = require('readline').createInterface({
 				"input": process.stdin,
 				"output": process.stdout
 			});
 			
-			rl.question('Steam Guard Code: ', function(code) {
-				lastLogOnDetails.authCode = code;
+			rl.question('Steam Guard ' + (e.eresult == Steam.EResult.AccountLogonDenied ? 'Email' : 'App') + ' Code: ', function(code) {
+				if(e.eresult == Steam.EResult.AccountLoginDeniedNeedTwoFactor) {
+					lastLogOnDetails.twoFactorCode = code;
+				} else {
+					lastLogOnDetails.authCode = code;
+				}
+				
 				client.logOn(lastLogOnDetails);
 			});
 		} else if(client.listeners('error') == 1) {
