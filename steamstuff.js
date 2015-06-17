@@ -60,6 +60,8 @@ function SteamStuff(Steam, client) {
 				}
 				
 				client.logOn(lastLogOnDetails);
+				
+				rl.close();
 			});
 		} else if(client.listeners('error') == 1) {
 			throw e; // Emulate standard EventEmitter behavior
