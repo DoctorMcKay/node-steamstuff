@@ -1,6 +1,8 @@
 # SteamStuff
 
-This is a simple module that's designed to make it very easy to bootstrap a [node-steam](https://github.com/seishun/node-steam)-based bot.
+This is a simple module that's designed to make it very easy to bootstrap a bot based on  [node-steam](https://github.com/seishun/node-steam) v0.8.x.
+
+**THIS WILL NOT WORK WITH `node-steam` v1.x.x!** You may want to look at [`node-steam-user`](https://github.com/DoctorMcKay/node-steam-user).
 
 # Installation
 
